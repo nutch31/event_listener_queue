@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/laravel_event/insert', 'ProfileController@insert');
+Route::get('/laravel_event/select/{id}', 'ProfileController@select');
+Route::put('/laravel_event/update', 'ProfileController@update');
+Route::delete('/laravel_event/delete', 'ProfileController@delete');
