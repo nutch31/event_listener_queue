@@ -17,7 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/laravel_event/insert', 'ProfileController@insert');
-Route::get('/laravel_event/select/{id}', 'ProfileController@select');
-Route::put('/laravel_event/update', 'ProfileController@update');
-Route::delete('/laravel_event/delete', 'ProfileController@delete');
+Route::post('/profile/insert', 'ProfileController@insert');
+Route::get('/profile/select/{id}', 'ProfileController@select');
+Route::put('/profile/update', 'ProfileController@update');
+Route::delete('/profile/delete', 'ProfileController@delete');
+
+Route::post('/post/insert', 'PostController@insert');
+Route::get('/post/select/{id}', 'PostController@select');
+Route::put('/post/update', 'PostController@update');
+Route::delete('/post/delete', 'PostController@delete');
+
+Route::post('/comment/insert', 'CommentController@insert');
+Route::get('/comment/select/{id}', 'CommentController@select');
+Route::put('/comment/update', 'CommentController@update');
+Route::delete('/comment/delete', 'CommentController@delete');

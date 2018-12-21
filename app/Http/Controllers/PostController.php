@@ -2,57 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\LoggingService;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
-use App\Events\LoggingServerEvents;
-
 use Illuminate\Http\Request;
-use App\Profile;
+use App\Post;
 
-class ProfileController extends Controller
+class PostController extends Controller
 {
     ///
     public function __construct()
     {
         $this->user_type = "App\User";
         $this->user_id = 1;
-        $this->auditable_type = "App\Profile";
-        $this->url = "https://message.heroleads.co.th/laravel_event/public/index.php/api/profile/";
+        $this->auditable_type = "App\Post";
+        $this->url = "https://message.heroleads.co.th/laravel_event/public/index.php/api/post/";
         $this->ip_address = "127.0.0.1";
         $this->user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";
     }
 
     public function select(request $request)
     {
-        $profiles = Profile::find($request->id)->get();
+        $posts = Post::find($request->id)->get();
 
         return response(array(
-            $profiles
+            $posts
         ), '200');
     }
 
     public function insert(request $request)
     {
-        $profile = new Profile;
+        $post = new Post;
 
-        $profile->title         = $request->title;
-        $profile->first_name    = $request->first_name;
-        $profile->last_name     = $request->last_name;
-        $profile->age           = $request->age;
-        $profile->height        = $request->height;
-        $profile->tall          = $request->tall;
-        $profile->address       = $request->address;
+        $post->post_name    = $request->post_name;
+        $post->post_detail  = $request->post_detail;
+        $post->status       = $request->status;
+        $post->user_id      = $this->user_id;
 
-        $profile->save();
+        $post->save();
 
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
             'event' => 'created',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
-            'new_values' => $profile["attributes"],
+            'auditable_id' => $post->id,
+            'new_values' => $post["attributes"],
             'url' => $this->url.'insert',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
@@ -70,28 +62,25 @@ class ProfileController extends Controller
 
     public function update(request $request)
     {
-        $profile = Profile::find($request->id);
+        $post = Post::find($request->id);
         
-        $old = $profile["attributes"];
+        $old = $post["attributes"];
 
-        $profile->title         = $request->title;
-        $profile->first_name    = $request->first_name;
-        $profile->last_name     = $request->last_name;
-        $profile->age           = $request->age;
-        $profile->height        = $request->height;
-        $profile->tall          = $request->tall;
-        $profile->address       = $request->address;
+        $post->post_name    = $request->post_name;
+        $post->post_detail  = $request->post_detail;
+        $post->status       = $request->status;
+        $post->user_id      = $this->user_id;
         
-        $profile->save();
+        $post->save();
 
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
             'event' => 'updated',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
+            'auditable_id' => $post->id,
             'old_values' => $old,
-            'new_values' => $profile["attributes"],
+            'new_values' => $post["attributes"],
             'url' => $this->url.'update',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
@@ -109,17 +98,17 @@ class ProfileController extends Controller
 
     public function delete(request $request)
     {
-        $profile = Profile::find($request->id);
-        $profile->delete();
-
+        $post = Post::find($request->id);
+        $post->delete();
+        
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
-            'event' => 'delete',
+            'event' => 'deleted',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
-            'old_values' => $profile["attributes"],
-            'url' => $this->url.'insert',
+            'auditable_id' => $post->id,
+            'old_values' => $post["attributes"],
+            'url' => $this->url.'delete',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
             'tags' => ''

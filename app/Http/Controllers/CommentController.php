@@ -2,57 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\LoggingService;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
-use App\Events\LoggingServerEvents;
-
 use Illuminate\Http\Request;
-use App\Profile;
+use App\Comment;
 
-class ProfileController extends Controller
+class CommentController extends Controller
 {
     ///
     public function __construct()
     {
         $this->user_type = "App\User";
         $this->user_id = 1;
-        $this->auditable_type = "App\Profile";
-        $this->url = "https://message.heroleads.co.th/laravel_event/public/index.php/api/profile/";
+        $this->auditable_type = "App\Comment";
+        $this->url = "https://message.heroleads.co.th/laravel_event/public/index.php/api/comment/";
         $this->ip_address = "127.0.0.1";
         $this->user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";
     }
 
     public function select(request $request)
     {
-        $profiles = Profile::find($request->id)->get();
+        $comments = Comment::find($request->id)->get();
 
         return response(array(
-            $profiles
+            $comments
         ), '200');
     }
 
     public function insert(request $request)
     {
-        $profile = new Profile;
+        $comment = new Comment;
 
-        $profile->title         = $request->title;
-        $profile->first_name    = $request->first_name;
-        $profile->last_name     = $request->last_name;
-        $profile->age           = $request->age;
-        $profile->height        = $request->height;
-        $profile->tall          = $request->tall;
-        $profile->address       = $request->address;
+        $comment->post_id    = $request->post_id;
+        $comment->comment    = $request->comment;
+        $comment->user_id    = $this->user_id;
 
-        $profile->save();
+        $comment->save();
 
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
             'event' => 'created',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
-            'new_values' => $profile["attributes"],
+            'auditable_id' => $comment->id,
+            'new_values' => $comment["attributes"],
             'url' => $this->url.'insert',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
@@ -70,28 +61,24 @@ class ProfileController extends Controller
 
     public function update(request $request)
     {
-        $profile = Profile::find($request->id);
+        $comment = Comment::find($request->id);
         
-        $old = $profile["attributes"];
+        $old = $comment["attributes"];
 
-        $profile->title         = $request->title;
-        $profile->first_name    = $request->first_name;
-        $profile->last_name     = $request->last_name;
-        $profile->age           = $request->age;
-        $profile->height        = $request->height;
-        $profile->tall          = $request->tall;
-        $profile->address       = $request->address;
+        $comment->post_id    = $request->post_id;
+        $comment->comment    = $request->comment;
+        $comment->user_id    = $this->user_id;
         
-        $profile->save();
+        $comment->save();
 
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
             'event' => 'updated',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
+            'auditable_id' => $comment->id,
             'old_values' => $old,
-            'new_values' => $profile["attributes"],
+            'new_values' => $comment["attributes"],
             'url' => $this->url.'update',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
@@ -109,17 +96,17 @@ class ProfileController extends Controller
 
     public function delete(request $request)
     {
-        $profile = Profile::find($request->id);
-        $profile->delete();
-
+        $comment = Comment::find($request->id);
+        $comment->delete();
+        
         $data = array(
             'user_type' => $this->user_type,
             'user_id' => $this->user_id,
-            'event' => 'delete',
+            'event' => 'deleted',
             'auditable_type' => $this->auditable_type,
-            'auditable_id' => $profile->id,
-            'old_values' => $profile["attributes"],
-            'url' => $this->url.'insert',
+            'auditable_id' => $comment->id,
+            'old_values' => $comment["attributes"],
+            'url' => $this->url.'delete',
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
             'tags' => ''

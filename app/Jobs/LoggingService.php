@@ -35,7 +35,7 @@ class LoggingService implements ShouldQueue
         //        
         //\Log::info('job', ['user_type' => $this->data]);
 
-        $ch = curl_init("http://localhost/loggingService/public/api/insert");
+        $ch = curl_init("https://message.heroleads.co.th/loggingService/public/index.php/api/insert");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
             
         curl_setopt($ch, CURLOPT_VERBOSE, true);
