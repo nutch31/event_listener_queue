@@ -31,3 +31,5 @@ Route::post('/comment/insert', 'CommentController@insert');
 Route::get('/comment/select/{id}', 'CommentController@select');
 Route::put('/comment/update', 'CommentController@update');
 Route::delete('/comment/delete', 'CommentController@delete');
+
+Route::post('/sendnotification', 'SendNotificationEmailController@sendnotification');
