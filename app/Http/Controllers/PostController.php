@@ -127,7 +127,7 @@ class PostController extends Controller
     {        
         $data = json_encode($data);
 
-        $ch = curl_init("https://message.heroleads.co.th/loggingService/public/index.php/api/insert");
+        $ch = curl_init("http://logservice.heroleads.co.th/logService/public/index.php/createTaskApprovalService");
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
             
         curl_setopt($ch, CURLOPT_VERBOSE, true);
