@@ -10,15 +10,20 @@ class SendNotificationEmailController extends Controller
     public function sendnotification(request $request)
     {
 
-        for($x=0;$x<=61;$x++)
+        for($x=1;$x<=1;$x++)
         {            
             $data = array(
+                "name" => "Mr. Nut Chantathab",
                 "email_from" => "admin.th@heroleads.com",
                 "email" => array("nut@heroleads.com", "nut_ch31@hotmail.com"),
                 "email_cc" => "nutnutnutnutnutnutnutnutnutnut@gmail.com",
                 "email_bcc" => "pongchrist@heroleads.com",
-                "subject_name" => "FYI : TEST SYSTEM".$x,
-                "campaign_name" => array("Rubic Cube : forgot enter new channel cycle", "Ford : forgot enter new channel cycle ")
+                "subject_name" => "FYI : TEST SYSTEM",
+                "campaign_name" => array("Rubic Cube : forgot enter new channel cycle", "Ford : forgot enter new channel cycle "),                
+                "channel_name" => array("Channel 1", "Channel X"),
+                "issue" => array("issue 1", "issue X"),
+                "link_campaign"  => array("http://www.google.com", "http://www.google.com"),  
+                "link_channel"  => array("http://www.google.com", "http://www.google.com"),      
             );
 
             $data = json_encode($data);
