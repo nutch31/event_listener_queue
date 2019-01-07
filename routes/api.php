@@ -33,3 +33,6 @@ Route::put('/comment/update', 'CommentController@update');
 Route::delete('/comment/delete', 'CommentController@delete');
 
 Route::post('/sendnotification', 'SendNotificationEmailController@sendnotification');
+
+Route::post('/testLogService/insert', 'TestLogService@insert');
+Route::get('/testLogService/select', 'TestLogService@select');
